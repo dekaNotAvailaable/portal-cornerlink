@@ -1,7 +1,7 @@
-package net.fabricmc.starbidou.portallinking.mixin;
+package net.fabricmc.dakes.cornerlink.mixin;
 
-import net.fabricmc.starbidou.portallinking.PortalHelper;
-import net.fabricmc.starbidou.portallinking.PortalLinking;
+import net.fabricmc.dakes.cornerlink.PortalHelper;
+import net.fabricmc.dakes.cornerlink.PortalLinking;
 import net.minecraft.block.Block;
 import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.block.Portal;
@@ -27,7 +27,7 @@ public abstract class NetherPortalBlockMixin extends Block implements Portal {
     @Inject(method = "getOrCreateExitPortalTarget", at = @At("HEAD"), cancellable = true)
     private void inject(ServerWorld world, Entity entity, BlockPos pos, BlockPos scaledPos, boolean inNether, WorldBorder worldBorder, CallbackInfoReturnable<TeleportTarget> cir)
     {
-        var corners = PortalHelper.getCornersVectorAt(entity.getWorld(), pos);
+        var corners = PortalHelper.getCornersVectorAt(entity.getEntityWorld(), pos);
 
         if( corners.hasLinkingBlocks())
         {
