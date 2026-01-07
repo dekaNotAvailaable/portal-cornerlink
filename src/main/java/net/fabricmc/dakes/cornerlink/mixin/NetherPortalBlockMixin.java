@@ -36,12 +36,13 @@ public abstract class NetherPortalBlockMixin extends Block implements Portal {
         WorldBorder worldBorder,
         CallbackInfoReturnable<TeleportTarget> cir
     ) {
+        // Find corner-linking data at the source portal
         var corners = PortalHelper.getCornersVectorAt(entity.getEntityWorld(), pos);
-
         if (!corners.hasLinkingBlocks()) {
             return;
         }
 
+        // Find destination portal rectangle
         var portalRect = PortalHelper.modifiedGetPortalRect(
             world,
             scaledPos,
@@ -49,18 +50,23 @@ public abstract class NetherPortalBlockMixin extends Block implements Portal {
             worldBorder,
             corners
         );
-
         if (portalRect.isEmpty()) {
             return;
         }
 
-        // Preserve entity state (CRITICAL)
+        // Preserve entity state (CRITICAL for minecarts)
         float yaw = entity.getYaw();
         float pitch = entity.getPitch();
         Vec3d velocity = entity.getVelocity();
 
         var rect = portalRect.get();
-        Vec3d exitPos = rect.center();
+
+        // Compute center of the portal rectangle (version-safe)
+        Vec3d exitPos = new Vec3d(
+            rect.lowerLeft.getX() + rect.width / 2.0,
+            rect.lowerLeft.getY() + 0.5,
+            rect.lowerLeft.getZ() + rect.width / 2.0
+        );
 
         TeleportTarget.PostDimensionTransition transition =
             TeleportTarget.SEND_TRAVEL_THROUGH_PORTAL_PACKET.then(e ->
