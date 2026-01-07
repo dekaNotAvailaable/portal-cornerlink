@@ -1,46 +1,75 @@
-# Portal Cornerlink
+Portal Cornerlink
 
-Control Nether portal linking by placing glazed terracotta at portal corners. Portals connect to destinations with matching corner patterns.
+Control Nether portal linking by placing glazed terracotta at portal corners. Portals connect to destinations with matching corner patterns while preserving vanilla-compatible entity behavior.
 
-**Fork of**: [Corner Portal Linking](https://gitlab.com/mc-starbidou/corner-portal-linking) by starbidou
-**This version**: Updated to 1.21.X with performance improvements (4-8x faster portal matching)
+This project is a downstream fork that fixes Nether portal exit orientation and entity velocity handling issues present in prior forks, without changing portal matching rules.
 
-## How It Works
+Origin & Credits
 
-1. Place any colored glazed terracotta at the 4 corners of a Nether portal
-2. On the other side, portals with matching corner patterns link together
-3. No corners = vanilla behavior
+Original project
+Corner Portal Linking
+ by starbidou
 
-Patterns are matched by block type, orientation doesn't matter (flipped portals still match).
+Upstream fork
+A community-maintained fork that updated the mod for Minecraft 1.21.x and introduced performance optimizations.
 
-## Build
+This fork
+A fix-focused downstream fork that restores correct portal exit behavior (orientation and velocity).
 
-### Standard Build
-```bash
-./gradlew build
-```
-Output: `build/libs/dakes-cornerlink-fabric-1.0.0.jar`
+This project is not affiliated with the original author or upstream fork maintainers.
 
-### Development
-```bash
-./gradlew runClient  # Launch client with mod
-./gradlew runServer  # Launch server with mod
-```
+What This Fork Changes
 
-### Nix Shell
-```bash
-nix develop  # Enter dev environment with JDK 21 and Gradle
-```
+Compared to the upstream fork:
 
-The flake provides a reproducible development environment with all required dependencies.
+✅ Fixed Nether portal exit orientation
+(matches vanilla Minecraft 1.21.5+ behavior)
 
-## Requirements
+✅ Preserves entity velocity across portal travel
+→ minecarts no longer derail
 
-- Minecraft
-- Fabric Loader ≥0.17.2
-- Fabric API ≥0.138.3
-- Java 21
+❌ No changes to portal corner-matching rules
 
-## License
+❌ No Minecraft version upgrade performed here
 
-LGPL v2.1
+❌ No new gameplay mechanics added
+
+If no linking blocks are present, vanilla Nether portal behavior is preserved.
+
+Compatibility Notes
+Nether portal chunk loaders
+
+This fork restores vanilla entity orientation and velocity handling when traveling through Nether portals.
+As a result, standard minecart-based Nether portal chunk loaders and rail-driven portal systems function correctly again.
+
+No chunk loading mechanics are added or modified by this mod — this fix simply restores vanilla-compatible behavior that portal-based designs rely on.
+
+How It Works
+
+Place any colored glazed terracotta at the four corners of a Nether portal
+
+On the destination side, portals with matching corner block patterns will link together
+
+Block orientation does not matter (mirrored portals still match)
+
+No corner blocks → vanilla Nether portal logic
+
+Requirements
+
+Minecraft 1.21.x
+
+Fabric Loader ≥ 0.17.2
+
+Fabric API ≥ 0.138.3
+
+Java 21
+
+Installation
+
+Install Fabric Loader for your Minecraft version
+
+Install Fabric API
+
+Place the mod JAR in your .minecraft/mods folder
+
+Launch the game
