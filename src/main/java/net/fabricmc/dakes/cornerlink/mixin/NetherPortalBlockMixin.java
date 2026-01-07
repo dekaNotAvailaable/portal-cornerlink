@@ -36,7 +36,7 @@ public abstract class NetherPortalBlockMixin extends Block implements Portal {
         WorldBorder worldBorder,
         CallbackInfoReturnable<TeleportTarget> cir
     ) {
-        var corners = PortalHelper.getCornersVectorAt(entity.getWorld(), pos);
+        var corners = PortalHelper.getCornersVectorAt(entity.getEntityWorld(), pos);
 
         if (!corners.hasLinkingBlocks()) {
             return;
@@ -54,7 +54,7 @@ public abstract class NetherPortalBlockMixin extends Block implements Portal {
             return;
         }
 
-        // === PRESERVE ENTITY STATE (CRITICAL) ===
+        // Preserve entity state (CRITICAL)
         float yaw = entity.getYaw();
         float pitch = entity.getPitch();
         Vec3d velocity = entity.getVelocity();
@@ -68,6 +68,7 @@ public abstract class NetherPortalBlockMixin extends Block implements Portal {
             );
 
         TeleportTarget target = new TeleportTarget(
+            world,
             exitPos,
             velocity,
             yaw,
